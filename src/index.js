@@ -2,10 +2,11 @@ import _ from 'lodash';
 export function onecmptiv(cl, v, dose, times) {
 	var c0 = dose/v;
   var ke = cl/v;
+  var t0 = times[0];
   var res = _.map(times, function(t) {
 		return(
 			{'x': t,
-			'y': c0*Math.exp(-ke*t)}
+			'y': c0*Math.exp(-ke*(t-t0))}
 		);
 		});
 	return res;
