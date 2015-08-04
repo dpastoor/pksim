@@ -24,6 +24,10 @@ export function sampleIntervals(regimen, sampleTimes) {
           if (nextDoseTime > sampleTimes[j]) {
             timeSlice.push(sampleTimes[j]);
           } else {
+            // add next dosetime to get starting amt for next segment
+            if (j != sampleTimes.length -1) {
+              timeSlice.push(nextDoseTime-0.001);
+            }
             sampleTimes.splice(0, j);
             break;
           }
