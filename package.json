@@ -1,0 +1,23 @@
+{
+  "name": "pksim",
+  "version": "0.0.0",
+  "description": "pk simulation for javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpastoor/pksim.git"
+  },
+  "keywords": [
+    "pharmacokinetics",
+    "simulation"
+  ],
+  "author": "devin pastoor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dpastoor/pksim/issues"
+  },
+  "homepage": "https://github.com/dpastoor/pksim#readme"
+}
