@@ -17,7 +17,6 @@ export function sampleIntervals(regimen, sampleTimes) {
     for(let i = 0; i < regimen['times'].length; ++i) {
       let timeSlice = [];
       let nextDoseTime = (i == regimen['times'].length-1 ? Infinity : regimen['times'][i + 1]);
-      console.log(nextDoseTime);
       if (regimen['times'][i] !== sampleTimes[0]) {
           timeSlice.push(regimen['times'][i]);
       }
