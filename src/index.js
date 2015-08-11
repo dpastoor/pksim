@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 export function onecmptiv(cl, v, dose, times) {
 	var c0 = dose/v;
   var ke = cl/v;
