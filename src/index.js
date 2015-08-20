@@ -11,14 +11,20 @@ export function onecmptiv(cl, v, dose, times) {
 		});
 	return res;
 }
-
+/**
+ * Represents a regimen.
+ * @
+ * @param {object} regimen - json object with equal length arrays for times and doses
+ * @param {array} sampleTimes - the sample times requested for 'observed' PK concentration values
+ * @returns {array} array of objects each with with doseNum, dose and time
+ */
 export function sampleIntervals(regimen, sampleTimes) {
   var intervals = [];
-    for(let i = 0; i < regimen['times'].length; ++i) {
+    for(let i = 0; i < regimen.times.length; ++i) {
       let timeSlice = [];
-      let nextDoseTime = (i == regimen['times'].length-1 ? Infinity : regimen['times'][i + 1]);
-      if (regimen['times'][i] !== sampleTimes[0]) {
-          timeSlice.push(regimen['times'][i]);
+      let nextDoseTime = (i == regimen.times.length-1 ? Infinity : regimen.times[i + 1]);
+      if (regimen.times[i] !== sampleTimes[0]) {
+          timeSlice.push(regimen.times[i]);
       }
       for(let j = 0; j < sampleTimes.length; ++j) {
           if (nextDoseTime > sampleTimes[j]) {
@@ -34,7 +40,7 @@ export function sampleIntervals(regimen, sampleTimes) {
       }
       intervals.push({
         doseNum: i+1,
-        dose: regimen['doses'][i],
+        dose: regimen.doses[i],
         time: timeSlice
       });
     }
