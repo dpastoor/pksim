@@ -1,4 +1,14 @@
 import * as _ from 'lodash';
+
+/**
+ * Represents a IV bolus.
+ * @
+ * @param {numeric} cl - clearance value
+ * @param {numeric} v - volume of distribution
+ * @param {numeric} dose - the dose (amount) to add at t0
+ * @param {array} times - array of time values to sampel at
+ * @returns {object} two arrays of time, concentration values at requested time points
+ */
 export function onecmptiv(cl, v, dose, times) {
 	var c0 = dose/v;
   var ke = cl/v;
