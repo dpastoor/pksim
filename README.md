@@ -1,16 +1,18 @@
 pksim
 ==========
 
-to install for development use
+To get started:
 
 ```
-npm install --dev
+npm install
 ```
 
-to re-run during development use
+the package is designed for on the fly babel compiling, by using `entry.js` as
+the only es5-only file. Therefore, es6 code for whatever 'interactive' work
+can be written in `pksimtest.js` and will automatically be converted on the fly
+
+Therefore, to run the contents of pksimtest.js just run
 
 ```
-npm run compile
+node entry.js
 ```
-
-to compile ES6 to es5
