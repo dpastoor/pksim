@@ -1,6 +1,6 @@
-import {onecmptiv} from './src/index.js';
+import {oneCmptIvBolus} from './src/index.js';
 
-console.log(onecmptiv(1,10, 100, [0, 1, 2,3 , 4, 5]))
+console.log(oneCmptIvBolus(1,10, 100, [0, 1, 2,3 , 4, 5]))
 // var seq = [];
 // for (var i = 0; i <= 48; i++) {
 // 	seq.push(i);

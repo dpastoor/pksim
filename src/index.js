@@ -9,7 +9,7 @@ import _ from 'lodash';
  * @param {array} times - array of time values to sampel at
  * @returns {object} arrays referenced with keys of time and dv
  */
-export function onecmptiv(cl, v, dose, times, c0 = 0, digits = 3) {
+export function oneCmptIvBolus(cl, v, dose, times, c0 = 0, digits = 3) {
   c0 = c0 + dose/v;
   let ke = cl/v;
   let t0 = times[0];
