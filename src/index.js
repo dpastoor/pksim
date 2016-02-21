@@ -9,14 +9,14 @@ import _ from 'lodash';
  * @param {array} times - array of time values to sampel at
  * @returns {object} arrays referenced with keys of time and dv
  */
-export function onecmptiv(cl, v, dose, times, c0 = 0) {
+export function onecmptiv(cl, v, dose, times, c0 = 0, digits = 3) {
   c0 = c0 + dose/v;
   let ke = cl/v;
   let t0 = times[0];
   let res = _.map(times, function(t) {
 		return({
       'time': t,
-			'dv': c0*Math.exp(-ke*(t-t0))
+			'dv': _.round(c0*Math.exp(-ke*(t-t0)), digits)
       });
     });
 	return res;
