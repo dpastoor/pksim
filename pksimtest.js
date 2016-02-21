@@ -1,6 +1,20 @@
-import {oneCmptIvBolus} from './src/index.js';
+import {oneCmptIvBolus, sampleIntervals, oldSampleIntervalFunction} from './src/index.js';
+import _ from 'lodash';
 
-console.log(oneCmptIvBolus(1,10, 100, [0, 1, 2,3 , 4, 5]))
+console.log(oneCmptIvBolus(1,10, 100, [0, 1, 2, 3, 4, 5]));
+console.time('sampleIntervals');
+let intervals = sampleIntervals({
+	doses: [100, 10, 1],
+	times: [0, 12, 24]
+}, _.range(0, 36, 0.1));
+console.timeEnd('sampleIntervals');
+// console.log(intervals);
+console.time('onecmpt');
+
+let onecmpt = oneCmptIvBolus(1,10, 100, intervals[0].times);
+console.timeEnd('onecmpt');
+console.log(onecmpt)
+//
 // var seq = [];
 // for (var i = 0; i <= 48; i++) {
 // 	seq.push(i);
