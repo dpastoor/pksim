@@ -6,12 +6,18 @@ console.time('sampleIntervals');
 let intervals = sampleIntervals({
 	doses: [100, 10, 1],
 	times: [0, 12, 24]
-}, _.range(0, 36, 0.1));
+}, _.range(0, 36, 0.5));
 console.timeEnd('sampleIntervals');
 // console.log(intervals);
 console.time('onecmpt');
 
-let onecmpt = oneCmptIvBolus(1,10, 100, intervals[0].times);
+let onecmpt = _.reduce(intervals, (acc, value, i, array) => {
+	if (!acc.length) {
+		return acc.concat(oneCmptIvBolus(1,10, 100, value.times));
+	}
+	let lastConc = acc[acc.length - 1].dv;
+	return acc.concat(oneCmptIvBolus(1,10, 100, value.times, lastConc));
+}, []);
 console.timeEnd('onecmpt');
 console.log(onecmpt)
 //
