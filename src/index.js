@@ -15,7 +15,7 @@ export function oneCmptIvBolus(cl, v, dose, times, c0 = 0, digits = 3) {
   let t0 = times[0];
   let res = _.map(times, function(t) {
 		return({
-      'time': t,
+      'time': _.round(t, digits),
 			'dv': _.round(c0*Math.exp(-ke*(t-t0)), digits)
       });
     });
@@ -28,14 +28,36 @@ export function oneCmptIvBolus(cl, v, dose, times, c0 = 0, digits = 3) {
  * @param {array} sampleTimes - the sample times requested for 'observed' PK concentration values
  * @returns {array} array of objects each with with doseNum, dose and time
  */
-// export function sampleIntervals(regimen, sampleTimes) {
-//
-// }
+export function sampleIntervals(regimen, sampleTimes) {
+  // TODO make so can pass a single dose that will get applied at all times
+    let intervals = [];
+    let currentIndex = 0;
+
+    for (let i = 0; i < regimen.times.length; i++) {
+      let timeSlice = [];
+      let stopTime = i === (regimen.times.length - 1) ? Infinity : regimen.times[i + 1];
+      // have to use undefined as if just do sampleTimes[currentIndex]
+      // if at time 0 will be coerced to false and not evaluate
+      while (sampleTimes[currentIndex] !== undefined && sampleTimes[currentIndex] < stopTime) {
+        timeSlice.push(sampleTimes[currentIndex]);
+        currentIndex++;
+      }
+      // want to include the stop time in the dosing interval as want to get the
+      // last concentration before the next dose would be given to get an appropriate 0
+      // but don't want the Infinity stop time
+      intervals.push({
+        doseNum: i+1,
+        dose: regimen.doses[i],
+        times: stopTime === Infinity ? timeSlice : timeSlice.concat(stopTime)
+      });
+    }
+
+    return intervals;
+}
 //
 //
 //
 // export function oldSampleIntervalFunction(regimen, sampleTimes) {
-//
 //   var intervals = [];
 //   for(let i = 0; i < regimen.times.length; i++) {
 //     let timeSlice = [];
