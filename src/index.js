@@ -13,20 +13,49 @@ export function oneCmptIvBolus(cl, v, dose, times, c0 = 0, digits = 3) {
   c0 = c0 + dose/v;
   let ke = cl/v;
   let t0 = times[0];
-  let res = _.map(times, function(t) {
+  return _.map(times, function(t) {
+    let dv = c0*Math.exp(-ke*(t-t0));
 		return({
       'time': _.round(t, digits),
-			'dv': _.round(c0*Math.exp(-ke*(t-t0)), digits)
+			'dv': _.round(dv, digits)
       });
     });
-	return res;
+}
+/**
+ * Represents a IV bolus.
+ * @
+ * @param {Number} cl - clearance value
+ * @param {Number} v - volume of distribution
+ * @param {Number} ka - absorption rate constant
+ * @param {Number} tau - dose interval
+ * @param {Number} dose - the dose (amount) to add at t0
+ * @param {Number} n - number of doses
+ * @param {Array} times - array of time values to sample at
+ * @param {Number} c0 - initial concentration
+ * @param {Number} digits - number of decimals to round to
+ * @returns {Object} arrays referenced with keys of time and dv
+ */
+export function oneCmptOral(cl, v, ka, tau, dose, n, times, c0 = 0, digits = 3) {
+  let ke = cl/v;
+  let t0 = times[0];
+  return _.map(times, function(t) {
+    let dv = (ka*dose/(v*(ka-ke)))*(
+      ((1-Math.exp(-n*ke*tau))/(1-Math.exp(-ke*tau)))*Math.exp(-ke*(t-t0)) - (
+      ((1-Math.exp(-n*ka*tau))/(1-Math.exp(-ka*tau)))*Math.exp(-ka*(t-t0))
+      )
+    );
+		return({
+      'time': _.round(t, digits),
+			'dv': _.round(dv, digits)
+      });
+    });
 }
 /**
  * Represents a regimen.
  * @
- * @param {object} regimen - json object with equal length arrays for times and doses
- * @param {array} sampleTimes - the sample times requested for 'observed' PK concentration values
- * @returns {array} array of objects each with with doseNum, dose and time
+ * @param {Object} regimen - json object with equal length arrays for times and doses
+ * @param {Array} sampleTimes - the sample times requested for 'observed' PK concentration values
+ * @returns {Array} array of objects each with with doseNum, dose and times
  */
 export function sampleIntervals(regimen, sampleTimes) {
   // TODO make so can pass a single dose that will get applied at all times
